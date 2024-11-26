@@ -14,7 +14,6 @@ function App() {
     },
     { path: "/sign-up", element: <SignUp /> },
     { path: "/sign-in", element: <SignIn /> },
-    { path: "*", element: <PageNotFound /> },
   ]);
   return (
     <div>
