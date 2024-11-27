@@ -6,12 +6,14 @@ import SignUp from './components/sign-up/SignUp';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PageNotFound from './components/page-not-found/PageNotFound';
 import LayOut from './components/layout/LayOut';
+import ProductsDetail from './components/productsDetail/ProductsDetail';
 function App() {
   const router = createBrowserRouter([
     {
       path: "/", element: <LayOut />,
       errorElement: <PageNotFound />
     },
+    {path: "/ProductsDetail", element: <ProductsDetail/>},
     { path: "/sign-up", element: <SignUp /> },
     { path: "/sign-in", element: <SignIn /> },
   ]);

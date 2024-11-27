@@ -1,61 +1,24 @@
-import React, { useEffect } from 'react';
-import { Box, Card, CardContent, CardMedia, Typography, Button, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Card, CardContent, CardMedia, Typography, Button, Grid, Rating } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Img1 from '../../assets/product-img-1.jpg';
-import Img2 from '../../assets/product-img-2.jpg';
-import Img3 from '../../assets/product-img-3.jpg';
 import axios from 'axios';
 
-const products = [
-
-  {
-    id: 1,
-    title: "Haldiram's Sev Bhujia",
-    category: 'Snack & Munchies',
-    price: 18,
-    originalPrice: 24,
-    rating: 4.5,
-    reviews: 149,
-    tag: 'Sale',
-    image: Img1,
-  },
-  {
-    id: 2,
-    title: 'NutriChoice Digestive',
-    category: 'Bakery & Biscuits',
-    price: 24,
-    rating: 4.5,
-    reviews: 25,
-    tag: '14%',
-    image: Img2,
-  },
-  {
-    id: 3,
-    title: 'Cadbury 5 Star Chocolate',
-    category: 'Bakery & Biscuits',
-    price: 32,
-    originalPrice: 35,
-    rating: 5,
-    reviews: 469,
-    image: Img3,
-  },
-];
-
 const LayOut = () => {
+  const [Products, setProducts] = useState([]);
+  console.log(Products, "Products");
 
-  useEffect(()=>{
-const ProductsData = axios.get("api.escuelajs.co/api/v1/products");
+  useEffect(() => {
+    const ProductsData = axios.get("http://api.escuelajs.co/api/v1/products").then((data) => setProducts(data.data));
+    console.log(ProductsData, 'products');
+  }, []);
 
-console.log(ProductsData, 'products' );
-
-  },[]);
   return (
     <Box sx={{ textAlign: 'center', padding: 2 }}>
       <Typography variant="h4" color="success">
         Home Page
       </Typography>
       <Grid container spacing={4} justifyContent="center">
-        {products.map((product) => (
+        {Products.map((product) => (
           <Grid item xs={12} sm={6} md={3} key={product.id}>
             <Card
               sx={{
@@ -70,48 +33,42 @@ console.log(ProductsData, 'products' );
             >
               <Box
                 sx={{
-                  width: '70%',
-                  margin: '0 auto', 
-                  overflow: 'hidden', 
+                  overflow: 'hidden',
                 }}
-              >
-                <CardMedia
-                  component="img"
-                  image={product.image}
-                  alt={product.title}
-                />
+              > {product.images && (
+                <img className='img-fluid' src={product.images[0]} alt='img' />
+              )}
               </Box>
               <CardContent>
                 <Typography variant="body2" color="textSecondary">
-                  {product.category}
+                  {product.category?.name}
                 </Typography>
                 <Typography variant="h6" sx={{ fontWeight: 500 }}>
                   {product.title}
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+                  <Box>
+
                   <Typography variant="body1" color="textPrimary">
                     ${product.price}
                   </Typography>
                   {product.originalPrice && (
                     <Typography
-                      component="span"
-                      sx={{
-                        textDecoration: 'line-through',
-                        color: '#999',
-                        fontSize: '0.9rem',
-                      }}
+                    component="span"
+                    sx={{
+                      textDecoration: 'line-through',
+                      color: '#999',
+                      fontSize: '0.9rem',
+                    }}
                     >
                       ${product.originalPrice}
                     </Typography>
                   )}
                 </Box>
-                <Typography
-                  variant="caption"
-                  color="textSecondary"
-                  sx={{ display: 'block', mt: 1 }}
-                >
-                  {product.rating} ★ ({product.reviews})
-                </Typography>
+                <Rating> 
+                   {product.rating} ★ ({product.reviews})
+                </Rating>
+                  </Box>
               </CardContent>
               <Box sx={{ padding: 1, display: 'flex', justifyContent: 'center' }}>
                 <Button

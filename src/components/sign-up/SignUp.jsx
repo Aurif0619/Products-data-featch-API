@@ -6,7 +6,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
-import { Password } from '@mui/icons-material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
@@ -24,11 +23,12 @@ const SignUp = () => {
             firstName: "",
             secondName: "",
             email: "",
-            Password: ""
+            password: ""
         },
         resolver: yupResolver(signupSchema),
     });
     console.log(errors, 'errors');
+
     return (
         <div
             style={{
@@ -61,7 +61,7 @@ const SignUp = () => {
                         control={control}
                         name="firstName"
                         render={({ field }) => (
-                            <TextField error ={errors?.firstName? true : false }
+                            <TextField error={errors?.firstName ? true : false}
                                 placeholder="First Name"
                                 fullWidth
                                 size="small"
@@ -73,16 +73,15 @@ const SignUp = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-
+                                helperText={errors?.firstName?.message}
                             />
                         )}
                     />
-                    <Typography className='text-danger mt-0'>{errors?.firstName?.message}</Typography>
                     <Controller
                         control={control}
                         name="secondName"
                         render={({ field }) => (
-                            <TextField error ={errors?.secondName? true : false }
+                            <TextField error={errors?.secondName ? true : false}
                                 placeholder="Second Name"
                                 fullWidth
                                 size="small"
@@ -94,16 +93,15 @@ const SignUp = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-
+                                helperText={errors?.secondName?.message}
                             />
                         )}
                     />
-                    <Typography className='text-danger mt-0'>{errors?.secondName?.message}</Typography>
                     <Controller
                         control={control}
                         name="email"
                         render={({ field }) => (
-                            <TextField error ={errors?.email? true : false }
+                            <TextField error={errors?.email ? true : false}
                                 fullWidth
                                 size="small"
                                 type='email'
@@ -116,16 +114,15 @@ const SignUp = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-
+                                helperText={errors?.email?.message}
                             />
                         )}
                     />
-                    <Typography className='text-danger mt-0'>{errors?.email?.message}</Typography>
                     <Controller
                         control={control}
                         name="password"
                         render={({ field }) => (
-                            <TextField error ={errors?.password? true : false }
+                            <TextField error={errors?.password ? true : false}
                                 placeholder="Password"
                                 slotProps={{
                                     input: {
@@ -140,10 +137,10 @@ const SignUp = () => {
                                 type={showPassword ? 'text' : 'password'}
                                 fullWidth
                                 size="small"
+                                helperText={errors?.password?.message}
                             />
                         )}
                     />
-                    <Typography className='text-danger mt-0'>{errors?.password?.message}</Typography>
                     <Button type='submit' variant="contained" fullWidth>
                         Sign Up
                     </Button>
@@ -160,7 +157,6 @@ const SignUp = () => {
                 </Box>
             </form>
         </div>
-
     );
 };
 
