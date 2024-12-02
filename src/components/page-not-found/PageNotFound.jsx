@@ -4,11 +4,11 @@ import Img404 from '../../assets/Img404.jpeg'
 const PageNotFound = () => {
   return (
     <>
-<Box className="d-flex justify-content-center align-items-center">
-  <Box className="border w-100 d-flex" sx={{height:'100vh'}}>
-    <img className='w-100 h-100' src={Img404} alt="" />
-  </Box>
-</Box>
+      <Box className="d-flex justify-content-center align-items-center bg-body-secondary" sx={{height: '100vh'}}>
+        <Box sx={{width:"40%"}}>
+          <img className='w-100' src={Img404} alt="" />
+        </Box>
+      </Box>
     </>
   )
 }
