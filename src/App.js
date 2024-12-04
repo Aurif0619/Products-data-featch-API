@@ -7,22 +7,27 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PageNotFound from './components/page-not-found/PageNotFound';
 import LayOut from './components/lay-out/LayOut';
 import ProductsDetail from './components/productsDetail/ProductsDetail';
-
+import CardList from './components/card-list/CardList';
+import { Provider } from 'react-redux';
+import { store } from './components/store/Store'; // Ensure this matches the file's name and location
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/", element: <LayOut />,
-      errorElement: <PageNotFound />
+      path: "/",
+      element: <LayOut />,
+      errorElement: <PageNotFound />,
     },
-    { path: "/ProductsDetail", element: <ProductsDetail/> },
+    { path: '/CardList', element: <CardList /> }, 
+    { path: "/ProductsDetail", element: <ProductsDetail /> },
     { path: "/sign-up", element: <SignUp /> },
     { path: "/sign-in", element: <SignIn /> },
   ]);
+
   return (
-    <div>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </div>
+    </Provider>
   );
 }
 

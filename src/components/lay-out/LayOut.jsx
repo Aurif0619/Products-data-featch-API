@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Box, Button, Card, CardContent, CssBaseline, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Rating, Toolbar, Typography, Divider, Menu, MenuItem, CircularProgress, Autocomplete, TextField, } from '@mui/material';
+import { AppBar, Box, Button, Card, CardContent, CssBaseline, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Rating, Toolbar, Typography, Divider, Menu, MenuItem, CircularProgress, Autocomplete, TextField, Badge, } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios';
@@ -10,6 +10,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartList from '../card-list/CardList';
+import { useSelector } from 'react-redux';
 
 const LayOut = () => {
   const [updateProductsArr, setUpdateProductsArr] = useState([]);
@@ -19,8 +22,16 @@ const LayOut = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const open = Boolean(anchorEl);
+  const [openCartList, setToggleCartList] = useState(false);
 
+  const {counter} = useSelector((state)=>state.counter);
+  
+  const toggleCartList = ( newOpen)=>()=>{
+      setToggleCartList (newOpen);
+  }
+
+  const open = Boolean(anchorEl);
+ 
   const filterProducts = (categoryProducts) => {
     if (!categoryProducts) {
       return;
@@ -118,6 +129,11 @@ const LayOut = () => {
               </Button>
             ))}
           </Box>
+          <Button>
+          <Badge badgeContent={counter}color='secondary'>
+            <ShoppingCartIcon onClick={toggleCartList(true)} className='text-white'/>
+          </Badge>
+          </Button>
           <IconButton onClick={handleMenuOpen} color="inherit">
             <AccountCircleIcon sx={{ color: '#fff', fontSize: '28px' }} />
           </IconButton>
@@ -255,6 +271,7 @@ const LayOut = () => {
           )}
         </Grid>
       </Box>
+      <CartList openCartList={openCartList} toggleCartList={toggleCartList}/>
     </Box>
   );
 };
